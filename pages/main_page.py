@@ -1,6 +1,5 @@
 from selenium.common import TimeoutException
 from pages.base_page import BasePage
-import time
 import allure
 from locators.main_functional_locators import MainFunctionalLocators as mf
 
@@ -16,7 +15,7 @@ class MainPage(BasePage):
 
     @allure.step('Открытие ленты заказов')
     def open_order_feed(self):
-        element = self.find_element_with_wait(mf.ORDER_FEED_BUTTON)
+        self.find_element_with_wait(mf.ORDER_FEED_BUTTON)
         self.is_element_clickable(mf.ORDER_FEED_BUTTON)
         self.click_to_element(mf.ORDER_FEED_BUTTON)
 

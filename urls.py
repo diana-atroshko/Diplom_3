@@ -1,0 +1,5 @@
+BASE_PAGE = 'https://stellarburgers.nomoreparties.site/'
+LOGIN_PAGE = 'https://stellarburgers.nomoreparties.site/login'
+FEED_PAGE = 'https://stellarburgers.nomoreparties.site/feed'
+RESET_PASSWORD_PAGE = 'https://stellarburgers.nomoreparties.site/reset-password'
+ORDER_HISTORY_PAGE = 'https://stellarburgers.nomoreparties.site/account/order-history'

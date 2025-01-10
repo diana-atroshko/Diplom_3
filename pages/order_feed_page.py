@@ -1,9 +1,7 @@
-import time
 import allure
+from locators.main_functional_locators import MainFunctionalLocators
 from locators.order_feed_locators import OrderFeedLocators
 from pages.base_page import BasePage
-
-from pages.main_page import MainPage
 
 
 class OrderFeedPage(BasePage):
@@ -50,25 +48,27 @@ class OrderFeedPage(BasePage):
 
     @allure.step('Проверка отображения заказа в процессе')
     def check_order_in_progress_displayed(self):
+        self.is_element_displayed(OrderFeedLocators.ORDER_IN_PROGRESS)
         in_progress_element = self.find_element_with_wait(OrderFeedLocators.ORDER_IN_PROGRESS)
+        if in_progress_element.text == 'Все текущие заказы готовы!':
+            self.wait_for_order_number_displayed(OrderFeedLocators.ORDER_IN_PROGRESS)
+            in_progress_element = self.find_element_with_wait(OrderFeedLocators.ORDER_IN_PROGRESS)
         return in_progress_element.text
+
 
     @allure.step('Получение номера заказа')
     def get_order_number(self):
+        self.is_element_displayed(OrderFeedLocators.ORDER_NUMBER)
+        self.wait_for_order_number_to_change_from_9999(OrderFeedLocators.ORDER_NUMBER)
         order_number_element = self.find_element_with_wait(OrderFeedLocators.ORDER_NUMBER)
         return order_number_element.text
 
-    @allure.step('Создание и совершения заказа')
-    def create_and_complete_order(self):
-        main_page= MainPage(self.driver)
-        main_page.open_constructor()
-        main_page.drop_ingredient_for_order(self.driver.name)
-        main_page.checkout_order()
-        self.find_element_with_wait(OrderFeedLocators.ORDER_NUMBER)
-        time.sleep(5)
-        return self.get_order_number()
 
     @allure.step('Закрытие деталей заказа')
     def close_order_details(self):
-        self.click_to_element(OrderFeedLocators.CLOSE_BUTTON)
+        self.click_element_with_action(locator=OrderFeedLocators.CLOSE_BUTTON,
+        modal_overlay_locator=MainFunctionalLocators.MODAL_OVERLAY)
 
+    @allure.step('Закрытие деталей заказа с JS')
+    def close_order_details_with_js(self):
+        self.click_window_with_js(OrderFeedLocators.CLOSE_BUTTON)

@@ -1,5 +1,7 @@
-BASE_PAGE = 'https://stellarburgers.nomoreparties.site/'
-LOGIN_PAGE = 'https://stellarburgers.nomoreparties.site/login'
-FEED_PAGE = 'https://stellarburgers.nomoreparties.site/feed'
-RESET_PASSWORD_PAGE = 'https://stellarburgers.nomoreparties.site/reset-password'
-ORDER_HISTORY_PAGE = 'https://stellarburgers.nomoreparties.site/account/order-history'
+
+BASE_URL = 'https://stellarburgers.nomoreparties.site/'
+BASE_PAGE = BASE_URL
+LOGIN_PAGE = f'{BASE_URL}login'
+FEED_PAGE = f'{BASE_URL}feed'
+RESET_PASSWORD_PAGE = f'{BASE_URL}reset-password'
+ORDER_HISTORY_PAGE = f'{BASE_URL}account/order-history'

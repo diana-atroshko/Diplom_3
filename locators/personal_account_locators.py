@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 
 class PersonalAccountLocators:
+    LOGO = [By.CSS_SELECTOR, "div.AppHeader_header__logo__2D0X2"]
     PERSONAL_ACCOUNT = [By.XPATH, "//a[normalize-space()='Личный Кабинет']"]
     TEXT_IN_PERSONAL_ACCOUNT = [By.XPATH,
                                 "//p[@class='Account_text__fZAIn text text_type_main-default' and contains(text(), 'В этом разделе вы можете изменить свои персональные данные')]"]

@@ -1,4 +1,4 @@
-import time
+
 from pages.base_page import BasePage
 import allure
 from locators.reset_password_locators import RecoverPasswordLocators
@@ -7,10 +7,14 @@ from locators.reset_password_locators import RecoverPasswordLocators
 class PasswordRecoveryPage(BasePage):
 
     @allure.step('Клик по кнопке восстановить пароль')
-    def click_recover_password(self):
-        self.scroll_to_element(RecoverPasswordLocators.BUTTON_RECOVER_PASSWORD)
-        time.sleep(2)
-        self.click_to_element(RecoverPasswordLocators.BUTTON_RECOVER_PASSWORD)
+    def click_recover_password(self,browser):
+        if browser == 'chrome':
+            self.scroll_to_element(RecoverPasswordLocators.BUTTON_RECOVER_PASSWORD)
+            self.is_element_clickable(RecoverPasswordLocators.BUTTON_RECOVER_PASSWORD)
+            self.click_to_element(RecoverPasswordLocators.BUTTON_RECOVER_PASSWORD)
+        elif browser == 'firefox':
+            self.scroll_to_element(RecoverPasswordLocators.BUTTON_RECOVER_PASSWORD)
+            self.click_element_with_action(locator= RecoverPasswordLocators.BUTTON_RECOVER_PASSWORD)
 
     @allure.step('Ввод почты')
     def enter_email(self, email):

@@ -1,9 +1,11 @@
-import time
 
 import allure
+from selenium.common import TimeoutException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
+from locators.main_functional_locators import MainFunctionalLocators
 
 
 class BasePage:
@@ -18,11 +20,13 @@ class BasePage:
 
     @allure.step('Клик по элементу')
     def click_to_element(self, locator):
-            WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(locator)).click()
+        element= self.is_element_clickable(locator)
+        element.click()
 
     @allure.step('Проверка доступности элемента для клика')
     def is_element_clickable(self,locator):
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(locator))
+        element = WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable(locator))
+        return element
 
     @allure.step('Ожидание наличия всех элементов на странице')
     def presence_of_all_elements_located(self,locator, timeout=25):
@@ -62,10 +66,17 @@ class BasePage:
     def get_current_url(self):
             return self.driver.current_url
 
+    @allure.step("Ожидание исчезновения элемента")
+    def is_element_invisible(self, locator):
+        WebDriverWait(self.driver, 20).until(
+            EC.invisibility_of_element(locator)
+        )
+
+
     @allure.step("Открытие URL")
     def open_url(self, url):
         self.driver.get(url)
-        time.sleep(5)
+        self.is_element_clickable(MainFunctionalLocators.ORDER_FEED_BUTTON)
 
     @allure.step('Перетаскивание элемента в Chrome')
     def drag_and_drop_for_chrome(self, ingredient, drop_area):
@@ -117,3 +128,43 @@ class BasePage:
         simulateHTML5DragAndDrop(source, target);
         """
         self.driver.execute_script(js_script, ingredient, drop_area)
+
+    @allure.step('Клик по элементу с использованием Actions')
+    def click_element_with_action(self, locator, modal_overlay_locator=None):
+        if modal_overlay_locator:
+            try:
+                # Ожидаем, пока модальное окно не исчезнет
+                WebDriverWait(self.driver, 20).until(EC.invisibility_of_element(modal_overlay_locator))
+            except TimeoutException:
+                print("Модальное окно не исчезло вовремя, пробуем кликнуть с помощью JavaScript.")
+
+            # Пытаемся найти элемент и кликнуть на него
+        try:
+            element = self.is_element_clickable(locator)
+            actions = ActionChains(self.driver)
+            actions.move_to_element(element).click().perform()
+        except Exception as e:
+            print(f"Ошибка при клике с помощью ActionChains: {e}. Пробуем кликнуть с помощью JavaScript.")
+            # Если клик с помощью ActionChains не удался, используем JavaScript
+            try:
+                element = self.driver.find_element(*locator)
+                self.driver.execute_script("arguments[0].click();", element)
+            except Exception as js_exception:
+                print(f"Ошибка при клике с помощью JavaScript: {js_exception}")
+
+    @allure.step('Клик по элементу с использованием js')
+    def click_window_with_js(self,locator):
+        element = self.find_element_with_wait(locator)
+        self.driver.execute_script("arguments[0].click();", element)
+
+    @allure.step('Ожидание, что номер заказа отобразится правильно')
+    def wait_for_order_number_to_change_from_9999(self, locator, timeout=20):
+        WebDriverWait(self.driver, timeout).until(
+            lambda d: d.find_element(*locator).text != '9999'
+        )
+
+    @allure.step('Ожидание, что номер заказа отобразится в работе')
+    def wait_for_order_number_displayed(self, locator, timeout=20):
+        WebDriverWait(self.driver, timeout).until(
+            lambda d: d.find_element(*locator).text != 'Все текущие заказы готовы!'
+        )

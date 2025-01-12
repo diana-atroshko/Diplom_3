@@ -11,5 +11,7 @@ class PersonalAccountLocators:
     TEXT_ENTER = [By.XPATH, "//h2[contains(text(), 'Вход')]"]  # заголовок Вход в форме входа
     NAME_INPUT = [By.XPATH, "//input[@name='name' and @type='text']"]
     PASSWORD_INPUT = [By.XPATH, "//input[@name='Пароль' and @type='password']"]
+    MODAL_OVERLAY = [By.CSS_SELECTOR, '.Modal_modal_overlay__x2ZCr']
+    BURGER_TITLE = [By.XPATH, "//h1[text()='Соберите бургер']"]
     LOGIN_BUTTON = [By.XPATH, "//button[contains(@class, 'button_button__33qZ0') and text()='Войти']"]
     ASSEMBLE_BURGER = [By.XPATH, "//h1[@class='text text_type_main-large mb-5 mt-10' and contains(text(), 'Соберите бургер')]" ] # текст соберите бургер

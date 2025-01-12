@@ -77,9 +77,9 @@ class MainPage(BasePage):
     @allure.step('Перетаскивание ингредиента для заказа')
     def drop_ingredient_for_order(self, browser):
 
-        ingredient_element = self.driver.find_element(*mf.INGREDIENT)
-        ingredient_element2 = self.driver.find_element(*mf.INGREDIENT_2)
-        drop_area_element = self.driver.find_element(*mf.ADD_BUTTON)
+        ingredient_element = self.find_element_with_wait(mf.INGREDIENT)
+        ingredient_element2 = self.find_element_with_wait(mf.INGREDIENT_2)
+        drop_area_element = self.find_element_with_wait(mf.ADD_BUTTON)
 
         if browser == 'chrome':
             self.drag_and_drop_for_chrome(ingredient_element, drop_area_element)

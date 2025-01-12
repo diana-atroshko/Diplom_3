@@ -1,4 +1,4 @@
-from locators.main_functional_locators import MainFunctionalLocators
+
 from pages.base_page import BasePage
 import allure
 from locators.personal_account_locators import PersonalAccountLocators
@@ -15,7 +15,7 @@ class PersonalAccountPage(BasePage):
         elif browser =='firefox':
             return self.click_element_with_action(
             locator=PersonalAccountLocators.PERSONAL_ACCOUNT,
-            modal_overlay_locator=MainFunctionalLocators.MODAL_OVERLAY)
+            modal_overlay_locator=PersonalAccountLocators.MODAL_OVERLAY)
 
     @allure.step('Проверка наличия заголовка "Вход"')
     def check_title_enter(self):
@@ -33,7 +33,7 @@ class PersonalAccountPage(BasePage):
         elif browser =='firefox':
             return self.click_element_with_action(
             locator=PersonalAccountLocators.HISTORY_BUTTON,
-            modal_overlay_locator=MainFunctionalLocators.MODAL_OVERLAY)
+            modal_overlay_locator=PersonalAccountLocators.MODAL_OVERLAY)
 
     @allure.step('Проверка URL истории заказов')
     def check_url_history_list(self):
@@ -54,5 +54,5 @@ class PersonalAccountPage(BasePage):
         self.add_text_to_element(PersonalAccountLocators.NAME_INPUT,NAME)
         self.add_text_to_element(PersonalAccountLocators.PASSWORD_INPUT,PASSWORD)
         self.click_to_element(PersonalAccountLocators.LOGIN_BUTTON)
-        self.find_element_with_wait(MainFunctionalLocators.BURGER_TITLE)
-        self.is_element_displayed(MainFunctionalLocators.BURGER_TITLE)
+        self.find_element_with_wait(PersonalAccountLocators.BURGER_TITLE)
+        self.is_element_displayed(PersonalAccountLocators.BURGER_TITLE)

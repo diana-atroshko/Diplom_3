@@ -23,4 +23,4 @@ class OrderFeedLocators:
     ORDER_IN_PROGRESS = [By.XPATH, "//ul[@class='OrderFeed_orderListReady__1YFem OrderFeed_orderList__cBvyi']"]
     ORDER_NUMBER = [By.XPATH, "//h2[@class='Modal_modal__title_shadow__3ikwq Modal_modal__title__2L34m text text_type_digits-large mb-8']"]
     CLOSE_BUTTON = [By.XPATH,"//button[contains(@class, 'Modal_modal__close_modified__3V5XS') and contains(@class, 'Modal_modal__close__TnseK')]"]
-
+    MODAL_OVERLAY = [By.CSS_SELECTOR, '.Modal_modal_overlay__x2ZCr']

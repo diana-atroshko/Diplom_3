@@ -1,5 +1,4 @@
 import allure
-from locators.main_functional_locators import MainFunctionalLocators
 from locators.order_feed_locators import OrderFeedLocators
 from pages.base_page import BasePage
 
@@ -67,7 +66,7 @@ class OrderFeedPage(BasePage):
     @allure.step('Закрытие деталей заказа')
     def close_order_details(self):
         self.click_element_with_action(locator=OrderFeedLocators.CLOSE_BUTTON,
-        modal_overlay_locator=MainFunctionalLocators.MODAL_OVERLAY)
+        modal_overlay_locator=OrderFeedLocators.MODAL_OVERLAY)
 
     @allure.step('Закрытие деталей заказа с JS')
     def close_order_details_with_js(self):
